@@ -1,0 +1,2 @@
+Rscript extract-gene-coord.r hg19/refFlat.txt hg19/genes.bed
+#Rscript extract-gene-coord.r hg38/refFlat.txt hg38/genes.bed
