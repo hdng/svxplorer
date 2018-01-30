@@ -2,7 +2,7 @@
 # Created by: Ha X. Dang <haxdang attt gmail dottt com>
 
 args = commandArgs(T)
-args = c('output/count.rds', 'ALL', 'chr14,chr21,chrX', '100', '5', 'output/peaks')
+#args = c('output/count.rds', 'ALL', 'chr14,chr21,chrX', '100', '5', 'output/peaks')
 #args = c('output/count.rds', 'ALL', 'ALL', '100', '5', 'output/peaks')
 if (length(args) != 6){stop('Rscript thisfile <sample-vs-widow-count.rds> <svtype> <cvs-of-chrs-to-search> <peakPick.win> <peakPick.minsd> <out.dir>\n')}
 
