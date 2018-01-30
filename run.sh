@@ -1,3 +1,4 @@
+exit;
 ###### Pipeline to discover genes recurrently affected by break points
 # Created by: Ha X. Dang <haxdang att gmail dott com>
 #
