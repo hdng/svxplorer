@@ -13,7 +13,14 @@
 #      by re-counting the number of samples within specific bases up/down stream
 #      Various flanking lengths can be used
 #
-#      
+# INPUT: bedpe files for individual samples of the same cohort in a directory
+#        named "bedpe", as follows:
+#        
+#        ./bedpe
+#        --- sample-1.bedpe
+#        --- sample-2.bedpe
+#        --- sample-3.bedpe
+#        ...................
 
 ### 1. Collect, filter, prepare break points from SV calls
 # merge SV bedpe from all samples to a single file, take whatever Manta flags as PASS
@@ -39,6 +46,7 @@ for type in `cut -f4 output/bp.bed | cut -f2 -d'/' | sort | uniq`; do cat output
 ### 2. Generate sliding windows from genome
 # 2a. for peak finding, small step, moderate window size
 Rscript3.1.2 genome-to-sliding-window.r annot/hg38/chromsize.tsv 100000 1000 output/genome.win-100kb.step-1kb.bed
+
 # 2b. for visualization, larger step and window, less data points
 Rscript3.1.2 genome-to-sliding-window.r annot/hg38/chromsize.tsv 3000000 1000000 output/genome.win-3mb.step-1mb.bed
 
@@ -46,9 +54,10 @@ Rscript3.1.2 genome-to-sliding-window.r annot/hg38/chromsize.tsv 3000000 1000000
 intersectBed -wao -a output/genome.win-100kb.step-1kb.bed -b output/bp.bed > output/genome.win-100kb.step-1kb.bed.overlap.tsv
 
 ### 4. Summarize/count/plot number of samples having at least one break point in window
-# prepare genes of interest bed file
+# 4a. prepare genes of interest bed file
 cat annot/genes-of-interest.txt | ./select-rows-v2.pl 0 annot/hg38/genes.bed 3 > output/genes-of-interest.bed
-# summarize/plot, a count.rds file will be placed in the output dir that will be used to find peak
+
+# 4b. summarize/plot, a count.rds file will be placed in the output dir that will be used to find peak
 Rscript3.1.2 summarize-sample-count.r output/genome.win-100kb.step-1kb.bed.overlap.tsv output T
 
 ### 5. Find peaks
